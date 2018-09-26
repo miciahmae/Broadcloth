@@ -5,8 +5,9 @@ VisualStudioVersion = 15.0.28010.2019
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DM Solution Documentation", "DM Solution Documentation", "{CEEDD335-FBAA-4A88-B7F3-DC66566842CA}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\DU-2018\INFO3300\Week 3\Broadcloth Solution Documentation.docx = ..\..\DU-2018\INFO3300\Week 3\Broadcloth Solution Documentation.docx
-		..\..\DU-2018\INFO3300\Week 3\Broadcloth Solution Workbook.xlsx = ..\..\DU-2018\INFO3300\Week 3\Broadcloth Solution Workbook.xlsx
+		DM Solution Documentation\Broadcloth Solution Documentation.docx = DM Solution Documentation\Broadcloth Solution Documentation.docx
+		DM Solution Documentation\Broadcloth Solution Workbook.xlsx = DM Solution Documentation\Broadcloth Solution Workbook.xlsx
+		DM Solution Documentation\BroadclothSTARSchema.vsdx = DM Solution Documentation\BroadclothSTARSchema.vsdx
 	EndProjectSection
 EndProject
 Global
