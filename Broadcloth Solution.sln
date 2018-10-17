@@ -10,9 +10,28 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DM Solution Documentation",
 		DM Solution Documentation\BroadclothSTARSchema.vsdx = DM Solution Documentation\BroadclothSTARSchema.vsdx
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DM Build", "DM Build", "{CB66A9C0-4C25-4FDD-8569-19CC4223A22A}"
+	ProjectSection(SolutionItems) = preProject
+		DM Solution Documentation\BuildBroadclothDM.sql = DM Solution Documentation\BuildBroadclothDM.sql
+	EndProjectSection
+EndProject
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "Integration Services Project1", "Integration Services Project1\Integration Services Project1.dtproj", "{B3D18810-40DF-4D13-A1B5-EB7DE1029956}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DM SSIS", "DM SSIS", "{4AD3E2B3-4287-49F0-8B07-4316B7081B8A}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3D18810-40DF-4D13-A1B5-EB7DE1029956}.Development|Default.ActiveCfg = Development
+		{B3D18810-40DF-4D13-A1B5-EB7DE1029956}.Development|Default.Build.0 = Development
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B3D18810-40DF-4D13-A1B5-EB7DE1029956} = {4AD3E2B3-4287-49F0-8B07-4316B7081B8A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7EFC09E0-0406-4ED7-B2DE-EAC7BFCCEC79}
