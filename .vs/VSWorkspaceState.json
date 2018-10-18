@@ -1,8 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\DM Solution Documentation"
+    "\\DM Build",
+    "\\DM Solution Documentation",
+    "\\Integration Services Project1"
   ],
-  "SelectedNode": "\\Broadcloth Solution.sln",
+  "SelectedNode": "\\Integration Services Project1\\Package.dtsx",
   "PreviewInSolutionExplorer": false
 }
