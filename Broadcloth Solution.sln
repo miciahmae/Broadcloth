@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DM Solution Documentation",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DM Build", "DM Build", "{CB66A9C0-4C25-4FDD-8569-19CC4223A22A}"
 	ProjectSection(SolutionItems) = preProject
-		DM Solution Documentation\BuildBroadclothDM.sql = DM Solution Documentation\BuildBroadclothDM.sql
+		DM Build\BuildBroadclothDM.sql = DM Build\BuildBroadclothDM.sql
 	EndProjectSection
 EndProject
 Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "Integration Services Project1", "Integration Services Project1\Integration Services Project1.dtproj", "{B3D18810-40DF-4D13-A1B5-EB7DE1029956}"

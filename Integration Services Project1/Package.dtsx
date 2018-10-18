@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="23"
-  DTS:VersionGUID="{99D53215-E0ED-4F78-BD6F-F799A07956AA}">
+  DTS:VersionBuild="55"
+  DTS:VersionGUID="{8D060427-0CB2-4101-A411-7B443A669DDF}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -63,7 +63,7 @@
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{791D3CDE-44E1-4F9F-AEE4-5599D9D1A4A6}"
-              SQLTask:SqlStatementSource="-- BroadclothDM developed and written by Broadcloth Team&#xA;-- Originally written: October 2018 | Updated: --&#xA;-----------------------------------------------------------&#xA;IF NOT EXISTS(SELECT * FROM sys.databases&#xA;&#x9;WHERE NAME = N'BroadclothDM')&#xA;&#x9;CREATE DATABASE BroadclothDM&#xA;GO  &#xA;&#xA;USE BroadclothDM&#xA;GO&#xA;&#xA;--&#xA;--Drop Existing Tables&#xA;--&#xA;&#xA;IF EXISTS(&#xA;&#x9;SELECT *&#xA;&#x9;FROM sys.tables&#xA;&#x9;WHERE NAME = N'FactSales'&#xA;&#x9;)&#xA;&#x9;DROP TABLE FactSales;&#xA;--&#xA;IF EXISTS(&#xA;&#x9;SELECT *&#xA;&#x9;FROM sys.tables&#xA;&#x9;WHERE NAME = N'DimCustomer'&#xA;&#x9;)&#xA;&#x9;DROP TABLE DimCustomer;&#xA;--&#xA;IF EXISTS(&#xA;&#x9;SELECT *&#xA;&#x9;FROM sys.tables&#xA;&#x9;WHERE NAME = N'DimFactory'&#xA;&#x9;)&#xA;&#x9;DROP TABLE DimFactory;&#xA;--&#xA;IF EXISTS(&#xA;&#x9;SELECT *&#xA;&#x9;FROM sys.tables&#xA;&#x9;WHERE NAME = N'DimModel'&#xA;&#x9;)&#xA;&#x9;DROP TABLE DimModel;&#xA;-- &#xA;IF EXISTS(&#xA;&#x9;SELECT *&#xA;&#x9;FROM sys.tables&#xA;&#x9;WHERE NAME = N'DimDate'&#xA;&#x9;)&#xA;&#x9;DROP TABLE DimDate;&#xA;&#xA;--&#xA;--Build Tables&#xA;--&#xA;&#xA;CREATE TABLE DimDate --Build script for DimDate taken from BuildAdventureWorksDM2017 created by Amy Phillips&#xA;&#x9;(&#xA;&#x9;Date_SK&#x9;&#x9;&#x9;&#x9;INT PRIMARY KEY, &#xA;&#x9;Date&#x9;&#x9;&#x9;&#x9;DATE,&#xA;&#x9;FullDate&#x9;&#x9;&#x9;NCHAR(10),-- Date in MM-dd-yyyy format&#xA;&#x9;DayOfMonth&#x9;&#x9;&#x9;INT, -- Field will hold day number of Month&#xA;&#x9;DayName&#x9;&#x9;&#x9;&#x9;NVARCHAR(9), -- Contains name of the day, Sunday, Monday &#xA;&#x9;DayOfWeek&#x9;&#x9;&#x9;INT,-- First Day Sunday=1 and Saturday=7&#xA;&#x9;DayOfWeekInMonth&#x9;INT, -- 1st Monday or 2nd Monday in Month&#xA;&#x9;DayOfWeekInYear&#x9;&#x9;INT,&#xA;&#x9;DayOfQuarter&#x9;&#x9;INT,&#xA;&#x9;DayOfYear&#x9;&#x9;&#x9;INT,&#xA;&#x9;WeekOfMonth&#x9;&#x9;&#x9;INT,-- Week Number of Month &#xA;&#x9;WeekOfQuarter&#x9;&#x9;INT, -- Week Number of the Quarter&#xA;&#x9;WeekOfYear&#x9;&#x9;&#x9;INT,-- Week Number of the Year&#xA;&#x9;Month&#x9;&#x9;&#x9;&#x9;INT, -- Number of the Month 1 to 12{}&#xA;&#x9;MonthName&#x9;&#x9;&#x9;NVARCHAR(9),-- January, February etc&#xA;&#x9;MonthOfQuarter&#x9;&#x9;INT,-- Month Number belongs to Quarter&#xA;&#x9;Quarter&#x9;&#x9;&#x9;&#x9;NCHAR(2),&#xA;&#x9;QuarterName&#x9;&#x9;&#x9;NVARCHAR(9),-- First,Second..&#xA;&#x9;Year&#x9;&#x9;&#x9;&#x9;INT,-- Year value of Date stored in Row&#xA;&#x9;YearName&#x9;&#x9;&#x9;CHAR(7), -- CY 2017,CY 2018&#xA;&#x9;MonthYear&#x9;&#x9;&#x9;CHAR(10), -- Jan-2018,Feb-2018&#xA;&#x9;MMYYYY&#x9;&#x9;&#x9;&#x9;INT,&#xA;&#x9;FirstDayOfMonth&#x9;&#x9;DATE,&#xA;&#x9;LastDayOfMonth&#x9;&#x9;DATE,&#xA;&#x9;FirstDayOfQuarter&#x9;DATE,&#xA;&#x9;LastDayOfQuarter&#x9;DATE,&#xA;&#x9;FirstDayOfYear&#x9;&#x9;DATE,&#xA;&#x9;LastDayOfYear&#x9;&#x9;DATE,&#xA;&#x9;IsHoliday&#x9;&#x9;&#x9;BIT,-- Flag 1=National Holiday, 0-No National Holiday&#xA;&#x9;IsWeekday&#x9;&#x9;&#x9;BIT,-- 0=Week End ,1=Week Day&#xA;&#x9;Holiday&#x9;&#x9;&#x9;&#x9;NVARCHAR(50),--Name of Holiday in US&#xA;&#x9;Season&#x9;&#x9;&#x9;&#x9;NVARCHAR(10)--Name of Season&#xA;&#x9;);&#xA;&#xA;--&#xA;CREATE TABLE DimCustomer&#xA;&#x9;(&#xA;&#x9;Customer_SK&#x9;&#x9;&#x9;INT IDENTITY (1,1) NOT NULL PRIMARY KEY,&#xA;&#x9;Customer_AK&#x9;&#x9;&#x9;INT NOT NULL,&#xA;&#x9;City&#x9;&#x9;&#x9;    NVARCHAR(20) NOT NULL,&#xA;&#x9;CustomerState&#x9;    NVARCHAR(20) NOT NULL,&#xA;&#x9;Nation&#x9;&#x9;        NVARCHAR(50) NOT NULL,&#xA;&#x9;PersonCategory&#x9;&#x9;NVARCHAR(20) NOT NULL&#xA;&#x9;);&#xA;--&#xA;CREATE TABLE DimFactory&#xA;&#x9;(&#xA;&#x9;Factory_SK&#x9;&#x9;&#x9;INT IDENTITY (1,1) NOT NULL PRIMARY KEY,&#xA;&#x9;Factory_AK&#x9;&#x9;&#x9;INT NOT NULL,&#xA;&#x9;City&#x9;&#x9;&#x9;&#x9;NVARCHAR(30) NOT NULL,&#xA;&#x9;Nation&#x9;&#x9;&#x9;&#x9;NVARCHAR(50) NOT NULL,&#xA;&#x9;MaxWorkers&#x9;&#x9;&#x9;INT NOT NULL,&#xA;&#x9;ContactFirstName&#x9;NVARCHAR(20) NOT NULL,&#xA;&#x9;ContactLastName     NVARCHAR(25) NOT NULL&#xA;&#x9;);&#xA;--&#xA;CREATE TABLE DimModel&#xA;&#x9;(&#xA;&#x9;Model_SK&#x9;&#x9;&#x9;INT IDENTITY (1,1) NOT NULL PRIMARY KEY,&#xA;&#x9;Model_AK&#x9;&#x9;&#x9;INT NOT NULL,&#xA;&#x9;BasePrice&#x9;&#x9;&#x9;MONEY NOT NULL,&#xA;&#x9;SizeLow&#x9;&#x9;&#x9;&#x9;DECIMAL NOT NULL,&#xA;&#x9;SizeHigh&#x9;&#x9;&#x9;DECIMAL NOT NULL,&#xA;&#x9;Color&#x9;&#x9;&#x9;&#x9;NVARCHAR(50) NOT NULL&#xA;&#x9;);&#xA;--&#xA;CREATE TABLE FactSales&#xA;&#x9;(&#xA;&#x9;Customer_SK&#x9;&#x9;&#x9;INT NOT NULL,&#xA;&#x9;Factory_SK&#x9;&#x9;&#x9;INT NOT NULL,&#xA;&#x9;Model_SK&#x9;&#x9;&#x9;INT NOT NULL,&#xA;&#x9;OrderDateKey&#x9;&#x9;INT NOT NULL,&#xA;&#x9;ShipDateKey&#x9;&#x9;&#x9;INT NOT NULL,&#xA;&#x9;OrderPrice&#x9;&#x9;&#x9;MONEY,&#xA;&#x9;OrderQuantity&#x9;&#x9;INT,&#xA;&#x9;CONSTRAINT fk_order_dim_date FOREIGN KEY (OrderDateKey) REFERENCES DimDate(Date_SK),&#xA;&#x9;CONSTRAINT fk_ship_dim_date FOREIGN KEY (ShipDateKey) REFERENCES DimDate(Date_SK),&#xA;&#x9;CONSTRAINT fk_dim_customer FOREIGN KEY (Customer_SK) REFERENCES DimCustomer(Customer_SK),&#xA;&#x9;CONSTRAINT fk_dim_factory FOREIGN KEY (Factory_SK) REFERENCES DimFactory(Factory_SK),&#xA;&#x9;CONSTRAINT fk_dim_model FOREIGN KEY (Model_SK) REFERENCES DimModel(Model_SK)&#xA;&#x9;);&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              SQLTask:SqlStatementSource="-- BroadclothDM developed and written by Broadcloth Team&#xA;-- Originally written: October 2018 | Updated: --&#xA;-----------------------------------------------------------&#xA;IF NOT EXISTS(SELECT * FROM sys.databases&#xA;&#x9;WHERE NAME = N'BroadclothDM')&#xA;&#x9;CREATE DATABASE BroadclothDM&#xA;GO  &#xA;&#xA;USE BroadclothDM&#xA;GO&#xA;&#xA;--&#xA;--Drop Existing Tables&#xA;--&#xA;&#xA;IF EXISTS(&#xA;&#x9;SELECT *&#xA;&#x9;FROM sys.tables&#xA;&#x9;WHERE NAME = N'FactSales'&#xA;&#x9;)&#xA;&#x9;DROP TABLE FactSales;&#xA;--&#xA;IF EXISTS(&#xA;&#x9;SELECT *&#xA;&#x9;FROM sys.tables&#xA;&#x9;WHERE NAME = N'DimCustomer'&#xA;&#x9;)&#xA;&#x9;DROP TABLE DimCustomer;&#xA;--&#xA;IF EXISTS(&#xA;&#x9;SELECT *&#xA;&#x9;FROM sys.tables&#xA;&#x9;WHERE NAME = N'DimFactory'&#xA;&#x9;)&#xA;&#x9;DROP TABLE DimFactory;&#xA;--&#xA;IF EXISTS(&#xA;&#x9;SELECT *&#xA;&#x9;FROM sys.tables&#xA;&#x9;WHERE NAME = N'DimModel'&#xA;&#x9;)&#xA;&#x9;DROP TABLE DimModel;&#xA;-- &#xA;IF EXISTS(&#xA;&#x9;SELECT *&#xA;&#x9;FROM sys.tables&#xA;&#x9;WHERE NAME = N'DimDate'&#xA;&#x9;)&#xA;&#x9;DROP TABLE DimDate;&#xA;&#xA;--&#xA;--Build Tables&#xA;--&#xA;&#xA;CREATE TABLE DimDate --Build script for DimDate taken from BuildAdventureWorksDM2017 created by Amy Phillips&#xA;&#x9;(&#xA;&#x9;Date_SK&#x9;&#x9;&#x9;&#x9;INT PRIMARY KEY, &#xA;&#x9;Date&#x9;&#x9;&#x9;&#x9;DATE,&#xA;&#x9;FullDate&#x9;&#x9;&#x9;NCHAR(10),-- Date in MM-dd-yyyy format&#xA;&#x9;DayOfMonth&#x9;&#x9;&#x9;INT, -- Field will hold day number of Month&#xA;&#x9;DayName&#x9;&#x9;&#x9;&#x9;NVARCHAR(9), -- Contains name of the day, Sunday, Monday &#xA;&#x9;DayOfWeek&#x9;&#x9;&#x9;INT,-- First Day Sunday=1 and Saturday=7&#xA;&#x9;DayOfWeekInMonth&#x9;INT, -- 1st Monday or 2nd Monday in Month&#xA;&#x9;DayOfWeekInYear&#x9;&#x9;INT,&#xA;&#x9;DayOfQuarter&#x9;&#x9;INT,&#xA;&#x9;DayOfYear&#x9;&#x9;&#x9;INT,&#xA;&#x9;WeekOfMonth&#x9;&#x9;&#x9;INT,-- Week Number of Month &#xA;&#x9;WeekOfQuarter&#x9;&#x9;INT, -- Week Number of the Quarter&#xA;&#x9;WeekOfYear&#x9;&#x9;&#x9;INT,-- Week Number of the Year&#xA;&#x9;Month&#x9;&#x9;&#x9;&#x9;INT, -- Number of the Month 1 to 12{}&#xA;&#x9;MonthName&#x9;&#x9;&#x9;NVARCHAR(9),-- January, February etc&#xA;&#x9;MonthOfQuarter&#x9;&#x9;INT,-- Month Number belongs to Quarter&#xA;&#x9;Quarter&#x9;&#x9;&#x9;&#x9;NCHAR(2),&#xA;&#x9;QuarterName&#x9;&#x9;&#x9;NVARCHAR(9),-- First,Second..&#xA;&#x9;Year&#x9;&#x9;&#x9;&#x9;INT,-- Year value of Date stored in Row&#xA;&#x9;YearName&#x9;&#x9;&#x9;CHAR(7), -- CY 2017,CY 2018&#xA;&#x9;MonthYear&#x9;&#x9;&#x9;CHAR(10), -- Jan-2018,Feb-2018&#xA;&#x9;MMYYYY&#x9;&#x9;&#x9;&#x9;INT,&#xA;&#x9;FirstDayOfMonth&#x9;&#x9;DATE,&#xA;&#x9;LastDayOfMonth&#x9;&#x9;DATE,&#xA;&#x9;FirstDayOfQuarter&#x9;DATE,&#xA;&#x9;LastDayOfQuarter&#x9;DATE,&#xA;&#x9;FirstDayOfYear&#x9;&#x9;DATE,&#xA;&#x9;LastDayOfYear&#x9;&#x9;DATE,&#xA;&#x9;IsHoliday&#x9;&#x9;&#x9;BIT,-- Flag 1=National Holiday, 0-No National Holiday&#xA;&#x9;IsWeekday&#x9;&#x9;&#x9;BIT,-- 0=Week End ,1=Week Day&#xA;&#x9;Holiday&#x9;&#x9;&#x9;&#x9;NVARCHAR(50),--Name of Holiday in US&#xA;&#x9;Season&#x9;&#x9;&#x9;&#x9;NVARCHAR(10)--Name of Season&#xA;&#x9;);&#xA;&#xA;--&#xA;CREATE TABLE DimCustomer&#xA;&#x9;(&#xA;&#x9;Customer_SK&#x9;&#x9;&#x9;INT IDENTITY (1,1) NOT NULL PRIMARY KEY,&#xA;&#x9;Customer_AK&#x9;&#x9;&#x9;INT NOT NULL,&#xA;&#x9;City&#x9;&#x9;&#x9;    NVARCHAR(20) NOT NULL,&#xA;&#x9;CustomerState&#x9;    NVARCHAR(20) NOT NULL,&#xA;&#x9;Nation&#x9;&#x9;        NVARCHAR(50) NOT NULL,&#xA;&#x9;PersonCategory&#x9;&#x9;NVARCHAR(20) NOT NULL&#xA;&#x9;);&#xA;--&#xA;CREATE TABLE DimFactory&#xA;&#x9;(&#xA;&#x9;Factory_SK&#x9;&#x9;&#x9;INT IDENTITY (1,1) NOT NULL PRIMARY KEY,&#xA;&#x9;Factory_AK&#x9;&#x9;&#x9;INT NOT NULL,&#xA;&#x9;City&#x9;&#x9;&#x9;&#x9;NVARCHAR(30) NOT NULL,&#xA;&#x9;Nation&#x9;&#x9;&#x9;&#x9;NVARCHAR(50) NOT NULL,&#xA;&#x9;MaxWorkers&#x9;&#x9;&#x9;INT NOT NULL,&#xA;&#x9;ContactFirstName&#x9;NVARCHAR(20) NOT NULL,&#xA;&#x9;ContactLastName     NVARCHAR(25) NOT NULL&#xA;&#x9;);&#xA;--&#xA;CREATE TABLE DimModel&#xA;&#x9;(&#xA;&#x9;Model_SK&#x9;&#x9;&#x9;INT IDENTITY (1,1) NOT NULL PRIMARY KEY,&#xA;&#x9;Model_AK&#x9;&#x9;&#x9;INT NOT NULL,&#xA;&#x9;BasePrice&#x9;&#x9;&#x9;MONEY NOT NULL,&#xA;&#x9;SizeLow&#x9;&#x9;&#x9;&#x9;DECIMAL NOT NULL,&#xA;&#x9;SizeHigh&#x9;&#x9;&#x9;DECIMAL NOT NULL,&#xA;&#x9;Color&#x9;&#x9;&#x9;&#x9;NVARCHAR(50) NOT NULL&#xA;&#x9;);&#xA;--&#xA;CREATE TABLE FactSales&#xA;&#x9;(&#xA;&#x9;Customer_SK&#x9;&#x9;&#x9;INT NOT NULL,&#xA;&#x9;Factory_SK&#x9;&#x9;&#x9;INT NOT NULL,&#xA;&#x9;Model_SK&#x9;&#x9;&#x9;INT NOT NULL,&#xA;&#x9;OrderDateKey&#x9;&#x9;INT NOT NULL,&#xA;&#x9;ShipDateKey&#x9;&#x9;&#x9;INT  NOT NULL,&#xA;&#x9;OrderPrice&#x9;&#x9;&#x9;MONEY,&#xA;&#x9;OrderQuantity&#x9;&#x9;INT,&#xA;&#x9;CONSTRAINT fk_order_dim_date FOREIGN KEY (OrderDateKey) REFERENCES DimDate(Date_SK),&#xA;&#x9;CONSTRAINT fk_ship_dim_date FOREIGN KEY (ShipDateKey) REFERENCES DimDate(Date_SK),&#xA;&#x9;CONSTRAINT fk_dim_customer FOREIGN KEY (Customer_SK) REFERENCES DimCustomer(Customer_SK),&#xA;&#x9;CONSTRAINT fk_dim_factory FOREIGN KEY (Factory_SK) REFERENCES DimFactory(Factory_SK),&#xA;&#x9;CONSTRAINT fk_dim_model FOREIGN KEY (Model_SK) REFERENCES DimModel(Model_SK)&#xA;&#x9;);&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
           </DTS:ObjectData>
         </DTS:Executable>
       </DTS:Executables>
@@ -97,19 +97,600 @@
         </DTS:Executable>
         <DTS:Executable
           DTS:refId="Package\Sequence Container 1\Load DimCustomer"
-          DTS:CreationName="Microsoft.ExecuteSQLTask"
-          DTS:Description="Execute SQL Task"
-          DTS:DTSID="{56A31729-F28F-4D8B-9E69-08C9E65F4C84}"
-          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{9916FE1E-3E82-4CF4-AB50-32B408808489}"
+          DTS:ExecutableType="Microsoft.Pipeline"
           DTS:LocaleID="-1"
           DTS:ObjectName="Load DimCustomer"
-          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="0">
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
           <DTS:Variables />
           <DTS:ObjectData>
-            <SQLTask:SqlTaskData
-              SQLTask:Connection="{791D3CDE-44E1-4F9F-AEE4-5599D9D1A4A6}"
-              SQLTask:SqlStatementSource="&#xA;&#xA;SELECT CustomerID AS &quot;Customer_AK&quot;, Customer.City, Contact.State, Customer.Nation, Contact.PersonCategory&#xA;FROM Customer&#xA;LEFT OUTER JOIN Contact&#xA;&#x9;ON Customer.ContactID = Contact.ContactID;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Sequence Container 1\Load DimCustomer\Insert Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Insert Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[DimCustomer]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[LocalHost.BroadclothDM]"
+                      connectionManagerRefId="Package.ConnectionManagers[LocalHost.BroadclothDM]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input].Columns[Customer_AK]"
+                          cachedDataType="i4"
+                          cachedName="Customer_AK"
+                          externalMetadataColumnId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[Customer_AK]"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[Customer_AK]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input].Columns[City]"
+                          cachedDataType="wstr"
+                          cachedLength="20"
+                          cachedName="City"
+                          externalMetadataColumnId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[City]"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[City]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input].Columns[CustomerState]"
+                          cachedDataType="wstr"
+                          cachedLength="20"
+                          cachedName="CustomerState"
+                          externalMetadataColumnId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerState]"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerState]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input].Columns[Nation]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="Nation"
+                          externalMetadataColumnId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[Nation]"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[Nation]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input].Columns[PersonCategory]"
+                          cachedDataType="wstr"
+                          cachedLength="20"
+                          cachedName="PersonCategory"
+                          externalMetadataColumnId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[PersonCategory]"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[PersonCategory]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[Customer_SK]"
+                          dataType="i4"
+                          name="Customer_SK" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[Customer_AK]"
+                          dataType="i4"
+                          name="Customer_AK" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[City]"
+                          dataType="wstr"
+                          length="20"
+                          name="City" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerState]"
+                          dataType="wstr"
+                          length="20"
+                          name="CustomerState" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[Nation]"
+                          dataType="wstr"
+                          length="50"
+                          name="Nation" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[PersonCategory]"
+                          dataType="wstr"
+                          length="20"
+                          name="PersonCategory" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT CustomerID AS "Customer_AK", Customer.City,  ISNULL(Contact.State,'N/A') AS CustomerState, Customer.Nation, Contact.PersonCategory
+FROM Customer
+LEFT OUTER JOIN Contact
+	ON Customer.ContactID = Contact.ContactID;</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[LocalHost.Broadcloth]"
+                      connectionManagerRefId="Package.ConnectionManagers[LocalHost.Broadcloth]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[Customer_AK]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Customer_AK]"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[Customer_AK]"
+                          name="Customer_AK"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[City]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[City]"
+                          length="20"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[City]"
+                          name="City"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerState]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerState]"
+                          length="20"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerState]"
+                          name="CustomerState"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[Nation]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Nation]"
+                          length="50"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[Nation]"
+                          name="Nation"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[PersonCategory]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PersonCategory]"
+                          length="20"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[PersonCategory]"
+                          name="PersonCategory"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Customer_AK]"
+                          dataType="i4"
+                          name="Customer_AK" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[City]"
+                          dataType="wstr"
+                          length="20"
+                          name="City" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerState]"
+                          dataType="wstr"
+                          length="20"
+                          name="CustomerState" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Nation]"
+                          dataType="wstr"
+                          length="50"
+                          name="Nation" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PersonCategory]"
+                          dataType="wstr"
+                          length="20"
+                          name="PersonCategory" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Customer_AK]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Customer_AK]"
+                          name="Customer_AK" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[City]"
+                          dataType="wstr"
+                          length="20"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[City]"
+                          name="City" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerState]"
+                          dataType="wstr"
+                          length="20"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerState]"
+                          name="CustomerState" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Nation]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Nation]"
+                          name="Nation" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PersonCategory]"
+                          dataType="wstr"
+                          length="20"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PersonCategory]"
+                          name="PersonCategory" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension"
+                  componentClassID="Microsoft.SCD"
+                  contactInfo="Slowly Changing Dimension;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;3"
+                  description="Updates a SQL Server Analysis Services data warehouse dimension. Update dimension records that are already present and  insert dimension records that aren't. For example, update the DimProduct table of the AdventureWorksDW OLAP database with data from the Products table in the AdventureWorks OLTP database."
+                  name="Slowly Changing Dimension"
+                  version="3">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SELECT statement used to create a schema rowset."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [City], [Customer_AK], [CustomerState], [Nation], [PersonCategory] FROM [dbo].[DimCustomer]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the WHERE clause in the SELECT statement that selects the current row among rows with identical business keys."
+                      name="CurrentRowWhere"></property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether historical attribute updates are directed to the transformation output for changing attribute updates."
+                      name="UpdateChangingAttributeHistory">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the transformation fails when columns with fixed attributes contain changes."
+                      name="FailOnFixedAttributeChange">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the column name for the inferred member."
+                      name="InferredMemberIndicator"></property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether inferred member updates are detected."
+                      name="EnableInferredMember">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the transformation fails when a lookup of an existing record fails."
+                      name="FailOnLookupFailure">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies that all rows in the input are new or the transformation detects the change type."
+                      name="IncomingRowChangeType"
+                      typeConverter="IncomingRowChangeType">1</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Connections[LookupConnection]"
+                      connectionManagerID="Package.ConnectionManagers[LocalHost.BroadclothDM]"
+                      connectionManagerRefId="Package.ConnectionManagers[LocalHost.BroadclothDM]"
+                      description="Defines the connection to use for lookups in the dimension table"
+                      name="LookupConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]"
+                      name="Slowly Changing Dimension Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[City]"
+                          cachedDataType="wstr"
+                          cachedLength="20"
+                          cachedName="City"
+                          externalMetadataColumnId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[City]"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[City]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              name="ColumnType"
+                              typeConverter="ColumnType">4</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[Customer_AK]"
+                          cachedDataType="i4"
+                          cachedName="Customer_AK"
+                          externalMetadataColumnId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[Customer_AK]"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[Customer_AK]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              name="ColumnType"
+                              typeConverter="ColumnType">1</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[CustomerState]"
+                          cachedDataType="wstr"
+                          cachedLength="20"
+                          cachedName="CustomerState"
+                          externalMetadataColumnId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[CustomerState]"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerState]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              name="ColumnType"
+                              typeConverter="ColumnType">4</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[Nation]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="Nation"
+                          externalMetadataColumnId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[Nation]"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[Nation]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              name="ColumnType"
+                              typeConverter="ColumnType">4</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[PersonCategory]"
+                          cachedDataType="wstr"
+                          cachedLength="20"
+                          cachedName="PersonCategory"
+                          externalMetadataColumnId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[PersonCategory]"
+                          lineageId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output].Columns[PersonCategory]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              name="ColumnType"
+                              typeConverter="ColumnType">4</property>
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[City]"
+                          dataType="wstr"
+                          length="20"
+                          name="City" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[Customer_AK]"
+                          dataType="i4"
+                          name="Customer_AK" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[CustomerState]"
+                          dataType="wstr"
+                          length="20"
+                          name="CustomerState" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[Nation]"
+                          dataType="wstr"
+                          length="50"
+                          name="Nation" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[PersonCategory]"
+                          dataType="wstr"
+                          length="20"
+                          name="PersonCategory" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Outputs[Unchanged Output]"
+                      description="Unchanged rows"
+                      exclusionGroup="1"
+                      name="Unchanged Output"
+                      synchronousInputId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Outputs[New Output]"
+                      description="New rows"
+                      exclusionGroup="1"
+                      name="New Output"
+                      synchronousInputId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Outputs[Fixed Attribute Output]"
+                      description="Rows with changes in columns tagged FixedAttribute"
+                      exclusionGroup="1"
+                      name="Fixed Attribute Output"
+                      synchronousInputId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Outputs[Changing Attribute Updates Output]"
+                      description="These rows contain new information for ChangingAttribute (Type 1) column changes"
+                      exclusionGroup="1"
+                      name="Changing Attribute Updates Output"
+                      synchronousInputId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Outputs[Historical Attribute Inserts Output]"
+                      description="HistoricalAttribute (Type 2) changes result in these new rows"
+                      exclusionGroup="2"
+                      name="Historical Attribute Inserts Output"
+                      synchronousInputId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Outputs[Inferred Member Updates Output]"
+                      description="Information to update unpopulated initial dimension row"
+                      exclusionGroup="1"
+                      name="Inferred Member Updates Output"
+                      synchronousInputId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Sequence Container 1\Load DimCustomer.Paths[New Output]"
+                  endId="Package\Sequence Container 1\Load DimCustomer\Insert Destination.Inputs[OLE DB Destination Input]"
+                  name="New Output"
+                  startId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Outputs[New Output]" />
+                <path
+                  refId="Package\Sequence Container 1\Load DimCustomer.Paths[OLE DB Source Output]"
+                  endId="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\Sequence Container 1\Load DimCustomer\OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
@@ -1589,7 +2170,7 @@ LEFT OUTER JOIN Item
         <DTS:PrecedenceConstraint
           DTS:refId="Package\Sequence Container 1.PrecedenceConstraints[Constraint]"
           DTS:CreationName=""
-          DTS:DTSID="{FA340215-757B-47A2-A775-0040D0C1B4DC}"
+          DTS:DTSID="{D7C297BA-C4CB-44B8-A133-E492B93C51E1}"
           DTS:From="Package\Sequence Container 1\Load DimCustomer"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint"
@@ -1634,7 +2215,1250 @@ LEFT OUTER JOIN Item
           <DTS:Variables />
           <DTS:ObjectData>
             <pipeline
-              version="1" />
+              version="1">
+              <components>
+                <component
+                  refId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate"
+                  componentClassID="Microsoft.Lookup"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="LKP -  OrderDate"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT Date_SK, Date FROM DimDate</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT Date_SK, Date FROM DimDate) [refTable]
+where [refTable].[Date] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Date_SK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Date" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[LocalHost.BroadclothDM]"
+                      connectionManagerRefId="Package.ConnectionManagers[LocalHost.BroadclothDM]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Inputs[Lookup Input].Columns[OrderDate]"
+                          cachedDataType="dbDate"
+                          cachedName="OrderDate"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">Date</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Outputs[Lookup Match Output].Columns[Date_SK]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Outputs[Lookup Match Output].Columns[Date_SK]"
+                          name="Date_SK"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">Date_SK</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate"
+                  componentClassID="Microsoft.Lookup"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="LKP -  ShipDate"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT Date_SK, Date 
+FROM DimDate</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT Date_SK, Date 
+FROM DimDate) [refTable]
+where [refTable].[Date] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Date_SK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Date" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[ShipDate]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[LocalHost.BroadclothDM]"
+                      connectionManagerRefId="Package.ConnectionManagers[LocalHost.BroadclothDM]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Inputs[Lookup Input].Columns[ShipDate]"
+                          cachedDataType="dbDate"
+                          cachedName="ShipDate"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[ShipDate]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">Date</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Outputs[Lookup Match Output].Columns[Date_SK]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Outputs[Lookup Match Output].Columns[Date_SK]"
+                          name="Date_SK"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">Date_SK</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK"
+                  componentClassID="Microsoft.Lookup"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="LKP - Customer_SK"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT Customer_AK, Customer_SK
+FROM DimCustomer</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT Customer_AK, Customer_SK
+FROM DimCustomer) [refTable]
+where [refTable].[Customer_AK] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Customer_AK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Customer_SK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerID]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[LocalHost.BroadclothDM]"
+                      connectionManagerRefId="Package.ConnectionManagers[LocalHost.BroadclothDM]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Inputs[Lookup Input].Columns[CustomerID]"
+                          cachedDataType="i4"
+                          cachedName="CustomerID"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerID]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">Customer_AK</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Outputs[Lookup Match Output].Columns[Customer_SK]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Outputs[Lookup Match Output].Columns[Customer_SK]"
+                          name="Customer_SK"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">Customer_SK</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK"
+                  componentClassID="Microsoft.Lookup"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="LKP - Factory_SK"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT Factory_AK, Factory_SK
+FROM DimFactory</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT Factory_AK, Factory_SK
+FROM DimFactory) [refTable]
+where [refTable].[Factory_AK] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Factory_AK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Factory_SK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[FactoryID]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[LocalHost.BroadclothDM]"
+                      connectionManagerRefId="Package.ConnectionManagers[LocalHost.BroadclothDM]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Inputs[Lookup Input].Columns[FactoryID]"
+                          cachedDataType="i4"
+                          cachedName="FactoryID"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[FactoryID]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">Factory_AK</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Outputs[Lookup Match Output].Columns[Factory_SK]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Outputs[Lookup Match Output].Columns[Factory_SK]"
+                          name="Factory_SK"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">Factory_SK</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK"
+                  componentClassID="Microsoft.Lookup"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="LKP - Model_SK"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT Model_AK, Model_SK 
+FROM DimModel</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT Model_AK, Model_SK 
+FROM DimModel) [refTable]
+where [refTable].[Model_AK] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Model_AK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Model_SK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[ModelID]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[LocalHost.BroadclothDM]"
+                      connectionManagerRefId="Package.ConnectionManagers[LocalHost.BroadclothDM]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Inputs[Lookup Input].Columns[ModelID]"
+                          cachedDataType="i4"
+                          cachedName="ModelID"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[ModelID]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">Model_AK</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Outputs[Lookup Match Output].Columns[Model_SK]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Outputs[Lookup Match Output].Columns[Model_SK]"
+                          name="Model_SK"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">Model_SK</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[FactSales]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[LocalHost.BroadclothDM]"
+                      connectionManagerRefId="Package.ConnectionManagers[LocalHost.BroadclothDM]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[OrderPrice]"
+                          cachedDataType="numeric"
+                          cachedName="OrderPrice"
+                          cachedPrecision="12"
+                          cachedScale="4"
+                          externalMetadataColumnId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrderPrice]"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderPrice]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[OrderQuantity]"
+                          cachedDataType="i4"
+                          cachedName="OrderQuantity"
+                          externalMetadataColumnId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrderQuantity]"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderQuantity]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Factory_SK]"
+                          cachedDataType="i4"
+                          cachedName="Factory_SK"
+                          externalMetadataColumnId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Factory_SK]"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Outputs[Lookup Match Output].Columns[Factory_SK]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Model_SK]"
+                          cachedDataType="i4"
+                          cachedName="Model_SK"
+                          externalMetadataColumnId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Model_SK]"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Outputs[Lookup Match Output].Columns[Model_SK]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Customer_SK]"
+                          cachedDataType="i4"
+                          cachedName="Customer_SK"
+                          externalMetadataColumnId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Customer_SK]"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Outputs[Lookup Match Output].Columns[Customer_SK]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Date_SK]"
+                          cachedDataType="i4"
+                          cachedName="Date_SK"
+                          externalMetadataColumnId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrderDateKey]"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Outputs[Lookup Match Output].Columns[Date_SK]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Date_SK1]"
+                          cachedDataType="i4"
+                          cachedName="Date_SK"
+                          externalMetadataColumnId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ShipDateKey]"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Outputs[Lookup Match Output].Columns[Date_SK]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Customer_SK]"
+                          dataType="i4"
+                          name="Customer_SK" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Factory_SK]"
+                          dataType="i4"
+                          name="Factory_SK" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Model_SK]"
+                          dataType="i4"
+                          name="Model_SK" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrderDateKey]"
+                          dataType="i4"
+                          name="OrderDateKey" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ShipDateKey]"
+                          dataType="i4"
+                          name="ShipDateKey" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrderPrice]"
+                          dataType="cy"
+                          name="OrderPrice" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrderQuantity]"
+                          dataType="i4"
+                          name="OrderQuantity" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT  Factory.FactoryID, Model.ModelID, Customer.CustomerID, CustomerOrder.OrderDate, ShipDate, SalePrice AS "OrderPrice", OrderQuantity
+FROM CustomerOrder
+INNER JOIN Customer 
+	ON Customer.CustomerID = CustomerOrder.CustomerID
+INNER JOIN ProductionBatch
+	ON ProductionBatch.OrderID = CustomerOrder.OrderID
+INNER JOIN Factory
+	ON Factory.FactoryID = ProductionBatch.FactoryID
+INNER JOIN OrderItem
+	ON CustomerOrder.OrderID = OrderItem.OrderID
+INNER JOIN Item 
+	ON Item.ItemID = OrderItem.ItemID
+INNER JOIN Model
+	ON Item.ModelID = Model.ModelID
+LEFT OUTER JOIN Shipment
+	ON CustomerOrder.CustomerID = Shipment.CustomerID;</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[LocalHost.Broadcloth]"
+                      connectionManagerRefId="Package.ConnectionManagers[LocalHost.Broadcloth]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]"
+                          dataType="dbDate"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderDate]"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDate]"
+                          name="OrderDate"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[ShipDate]"
+                          dataType="dbDate"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ShipDate]"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[ShipDate]"
+                          name="ShipDate"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderPrice]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderPrice]"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderPrice]"
+                          name="OrderPrice"
+                          precision="12"
+                          scale="4"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderQuantity]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderQuantity]"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderQuantity]"
+                          name="OrderQuantity"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[FactoryID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FactoryID]"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[FactoryID]"
+                          name="FactoryID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[ModelID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ModelID]"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[ModelID]"
+                          name="ModelID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerID]"
+                          name="CustomerID"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderDate]"
+                          dataType="dbDate"
+                          name="OrderDate" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ShipDate]"
+                          dataType="dbDate"
+                          name="ShipDate" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderPrice]"
+                          dataType="numeric"
+                          name="OrderPrice"
+                          precision="12"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderQuantity]"
+                          dataType="i4"
+                          name="OrderQuantity" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FactoryID]"
+                          dataType="i4"
+                          name="FactoryID" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ModelID]"
+                          dataType="i4"
+                          name="ModelID" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
+                          dataType="i4"
+                          name="CustomerID" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FactoryID]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FactoryID]"
+                          name="FactoryID" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ModelID]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ModelID]"
+                          name="ModelID" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
+                          name="CustomerID" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderDate]"
+                          dataType="dbDate"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderDate]"
+                          name="OrderDate" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ShipDate]"
+                          dataType="dbDate"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ShipDate]"
+                          name="ShipDate" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderPrice]"
+                          dataType="numeric"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderPrice]"
+                          name="OrderPrice"
+                          precision="12"
+                          scale="4" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderQuantity]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderQuantity]"
+                          name="OrderQuantity" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Sequence Container 2\Load FactOrders.Paths[Lookup Match Output]"
+                  endId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Inputs[Lookup Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Sequence Container 2\Load FactOrders.Paths[Lookup Match Output1]"
+                  endId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Inputs[Lookup Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Sequence Container 2\Load FactOrders.Paths[Lookup Match Output2]"
+                  endId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Inputs[Lookup Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Sequence Container 2\Load FactOrders.Paths[Lookup Match Output3]"
+                  endId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Inputs[Lookup Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Sequence Container 2\Load FactOrders.Paths[Lookup Match Output4]"
+                  endId="Package\Sequence Container 2\Load FactOrders\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Sequence Container 2\Load FactOrders.Paths[OLE DB Source Output]"
+                  endId="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK.Inputs[Lookup Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\Sequence Container 2\Load FactOrders\OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
           </DTS:ObjectData>
         </DTS:Executable>
       </DTS:Executables>
@@ -1671,14 +3495,14 @@ LEFT OUTER JOIN Item
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="164,42.6666666666667"
+          Size="118.666666666667,42.6666666666667"
           Id="Package\Sequence Container\BuildDM"
-          TopLeft="5.5,5.50000000000004" />
+          TopLeft="29.6666663065553,26.2999996280671" />
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="174.666666666667,103.333333333334"
-          Size="174.666666666667,146"
+          PanelSize="174.666666666667,124"
+          Size="174.666666666667,166.666666666667"
           Id="Package\Sequence Container"
           TopLeft="67.0833323337138,31.6333327676853" />
         <NodeLayout
@@ -1688,29 +3512,29 @@ LEFT OUTER JOIN Item
         <NodeLayout
           Size="169.333333333334,42.6666666666667"
           Id="Package\Sequence Container 1\Load DimCustomer"
-          TopLeft="7.5,5.50000000000004" />
-        <NodeLayout
-          Size="152,42.6666666666667"
-          Id="Package\Sequence Container 1\Load DimModel"
-          TopLeft="16.1666666666667,210.833333333334" />
+          TopLeft="6.49999891966587,21.0999993723631" />
         <NodeLayout
           Size="158.666666666667,42.6666666666667"
           Id="Package\Sequence Container 1\Load DimFactory"
           TopLeft="12.8333333333334,313.5" />
+        <NodeLayout
+          Size="152,42.6666666666667"
+          Id="Package\Sequence Container 1\Load DimModel"
+          TopLeft="16.1666666666667,210.833333333334" />
         <EdgeLayout
           Id="Package\Sequence Container 1.PrecedenceConstraints[Constraint]"
-          TopLeft="92.1666666666667,48.1666666666667">
+          TopLeft="91.6666661264996,63.7666660390297">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,60.0000000000001"
+              EndConnector="0,44.4000006276373"
               Start="0,0"
-              End="0,52.5000000000001">
+              End="0,36.9000006276373">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,52.5000000000001" />
+                    End="0,36.9000006276373" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1766,24 +3590,47 @@ LEFT OUTER JOIN Item
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="184.666666666667,411.333333333334"
-          Size="184.666666666667,455.333333333334"
+          PanelSize="230.666666666667,412.666666666667"
+          Size="230.666666666667,455.333333333334"
           Id="Package\Sequence Container 1"
           TopLeft="65.8333323523403,257.833328722914" />
+        <NodeLayout
+          Size="157.333333333334,42.6666666666667"
+          Id="Package\Sequence Container 2\Load FactOrders"
+          TopLeft="39.1666578377288,21.3666609559458" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="238,126"
+          Size="238,168.666666666667"
+          Id="Package\Sequence Container 2"
+          TopLeft="369.305550052474,429.72221453819" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="156.29166567636,177.633332767685">
+          TopLeft="154.416665667047,198.299999434352">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,80.1999959552286"
+              EndConnector="26.7500000186265,59.5333292885621"
               Start="0,0"
-              End="0,72.6999959552286">
+              End="26.7500000186265,52.0333292885621">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,72.6999959552286" />
+                    End="0,25.7666646442811" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25.7666646442811"
+                    Point2="0,29.7666646442811"
+                    Point3="4,29.7666646442811" />
+                  <mssgle:LineSegment
+                    End="22.7500000186265,29.7666646442811" />
+                  <mssgle:CubicBezierSegment
+                    Point1="22.7500000186265,29.7666646442811"
+                    Point2="26.7500000186265,29.7666646442811"
+                    Point3="26.7500000186265,33.7666646442811" />
+                  <mssgle:LineSegment
+                    End="26.7500000186265,52.0333292885621" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1792,43 +3639,32 @@ LEFT OUTER JOIN Item
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="157.333333333334,42.6666666666667"
-          Id="Package\Sequence Container 2\Load FactOrders"
-          TopLeft="39.1666578377288,21.3666609559458" />
-        <ContainerLayout
-          HeaderHeight="43"
-          IsExpanded="True"
-          PanelSize="238,125.333333333334"
-          Size="238,168.666666666667"
-          Id="Package\Sequence Container 2"
-          TopLeft="369.305550052474,429.72221453819" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="250.499999019007,485.499995389581">
+          TopLeft="296.499999019007,485.499995389581">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="118.805551033467,28.555552481943"
+              EndConnector="72.8055510334671,28.5555524819426"
               Start="0,0"
-              End="111.305551033467,28.555552481943">
+              End="65.3055510334671,28.5555524819426">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="55.4027755167335,0" />
+                    End="32.4027755167335,0" />
                   <mssgle:CubicBezierSegment
-                    Point1="55.4027755167335,0"
-                    Point2="59.4027755167335,0"
-                    Point3="59.4027755167335,4" />
+                    Point1="32.4027755167335,0"
+                    Point2="36.4027755167335,0"
+                    Point3="36.4027755167335,4" />
                   <mssgle:LineSegment
-                    End="59.4027755167335,24.555552481943" />
+                    End="36.4027755167335,24.5555524819426" />
                   <mssgle:CubicBezierSegment
-                    Point1="59.4027755167335,24.555552481943"
-                    Point2="59.4027755167335,28.555552481943"
-                    Point3="63.4027755167335,28.555552481943" />
+                    Point1="36.4027755167335,24.5555524819426"
+                    Point2="36.4027755167335,28.5555524819426"
+                    Point3="40.4027755167335,28.5555524819426" />
                   <mssgle:LineSegment
-                    End="111.305551033467,28.555552481943" />
+                    End="65.3055510334671,28.5555524819426" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1840,6 +3676,350 @@ LEFT OUTER JOIN Item
       </GraphLayout>
     </LayoutInfo>
   </Package>
+  <TaskHost
+    design-time-name="Package\Sequence Container 1\Load DimCustomer">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="209.333333333334,42.6666666666667"
+          Id="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension"
+          TopLeft="5.50000000000003,108.166666666667" />
+        <NodeLayout
+          Size="150.666666666667,42.6666666666667"
+          Id="Package\Sequence Container 1\Load DimCustomer\OLE DB Source"
+          TopLeft="34.8333333333334,5.50000000000004" />
+        <NodeLayout
+          Size="164,42.6666666666667"
+          Id="Package\Sequence Container 1\Load DimCustomer\Insert Destination"
+          TopLeft="28.1666666666667,210.833333333334" />
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Load DimCustomer.Paths[OLE DB Source Output]"
+          TopLeft="110.166666666667,48.1666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60.0000000000001"
+              Start="0,0"
+              End="0,52.5000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Load DimCustomer.Paths[New Output]"
+          TopLeft="110.166666666667,150.833333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60.0000000000001"
+              Start="0,0"
+              End="0,52.5000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-27.09138671875,20.533203125,54.1827734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container 1\Load DimCustomer\Slowly Changing Dimension">
+    <Properties>
+      <Property>
+        <Name>SCDMetadata</Name>
+        <Value
+          type="q2:string">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SCDWizardMetadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionID&gt;{7E9E9A59-E6D2-4CD3-A093-7A53447088D2}&lt;/ConnectionID&gt;
+  &lt;TableName&gt;[dbo].[DimCustomer]&lt;/TableName&gt;
+  &lt;InputToColumnsCollection&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[City]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;City&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;FixedAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[Customer_AK]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;Customer_AK&lt;/ColumnName&gt;
+      &lt;KeyType&gt;BusinessKey&lt;/KeyType&gt;
+      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerState]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;CustomerState&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;FixedAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[Nation]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;Nation&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;FixedAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[PersonCategory]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;PersonCategory&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;FixedAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+  &lt;/InputToColumnsCollection&gt;
+  &lt;GeneratedComponentsIdentificationStrings&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;Insert Destination&lt;/anyType&gt;
+  &lt;/GeneratedComponentsIdentificationStrings&gt;
+  &lt;FailFixedAttribute&gt;false&lt;/FailFixedAttribute&gt;
+  &lt;FailChangeAttribute&gt;false&lt;/FailChangeAttribute&gt;
+  &lt;UseStartEndDate&gt;false&lt;/UseStartEndDate&gt;
+  &lt;CurrentIndicatorColumn /&gt;
+  &lt;InferredIndicatorColumn /&gt;
+  &lt;ValueCurrent /&gt;
+  &lt;ValueExpired /&gt;
+  &lt;StartDateColumn /&gt;
+  &lt;EndDateColumn /&gt;
+  &lt;DateVariable /&gt;
+  &lt;EnableInferredSupport&gt;false&lt;/EnableInferredSupport&gt;
+&lt;/SCDWizardMetadata&gt;</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container 1\Load DimCustomer\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Sequence Container 1\Load DimFactory">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="150.666666666667,42.6666666666667"
+          Id="Package\Sequence Container 1\Load DimFactory\OLE DB Source"
+          TopLeft="238.166666666667,5.50000000000004" />
+        <NodeLayout
+          Size="166.666666666667,42.6666666666667"
+          Id="Package\Sequence Container 1\Load DimFactory\OLE DB Command"
+          TopLeft="230.166666666667,210.833333333334" />
+        <NodeLayout
+          Size="164,42.6666666666667"
+          Id="Package\Sequence Container 1\Load DimFactory\Insert Destination"
+          TopLeft="5.50000000000006,210.833333333334" />
+        <NodeLayout
+          Size="209.333333333334,42.6666666666667"
+          Id="Package\Sequence Container 1\Load DimFactory\Slowly Changing Dimension"
+          TopLeft="208.833333333333,108.166666666667" />
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Load DimFactory.Paths[New Output]"
+          TopLeft="279.944444444444,150.833333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-192.444444444444,60.0000000000001"
+              Start="0,0"
+              End="-192.444444444444,52.5000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.2730720606827" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.2730720606827"
+                    Point2="0,24.2730720606827"
+                    Point3="-4,24.2730720606827" />
+                  <mssgle:LineSegment
+                    End="-188.444444444444,24.2730720606827" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-188.444444444444,24.2730720606827"
+                    Point2="-192.444444444444,24.2730720606827"
+                    Point3="-192.444444444444,28.2730720606827" />
+                  <mssgle:LineSegment
+                    End="-192.444444444444,52.5000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-123.313608940972,29.2730720606827,54.1827734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Load DimFactory.Paths[Changing Attribute Updates Output]"
+          TopLeft="347.055555555556,150.833333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-33.5555555555555,60.0000000000001"
+              Start="0,0"
+              End="-33.5555555555555,52.5000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.2730720606827" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.2730720606827"
+                    Point2="0,24.2730720606827"
+                    Point3="-4,24.2730720606827" />
+                  <mssgle:LineSegment
+                    End="-29.5555555555555,24.2730720606827" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-29.5555555555555,24.2730720606827"
+                    Point2="-33.5555555555555,24.2730720606827"
+                    Point3="-33.5555555555555,28.2730720606827" />
+                  <mssgle:LineSegment
+                    End="-33.5555555555555,52.5000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-95.3116840277778,29.2730720606827,157.0678125,11.6630859375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Load DimFactory.Paths[OLE DB Source Output]"
+          TopLeft="313.5,48.1666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60.0000000000001"
+              Start="0,0"
+              End="0,52.5000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container 1\Load DimFactory\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container 1\Load DimFactory\Insert Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container 1\Load DimFactory\Slowly Changing Dimension">
+    <Properties>
+      <Property>
+        <Name>SCDMetadata</Name>
+        <Value
+          type="q2:string">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SCDWizardMetadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionID&gt;{7E9E9A59-E6D2-4CD3-A093-7A53447088D2}&lt;/ConnectionID&gt;
+  &lt;TableName&gt;[dbo].[DimFactory]&lt;/TableName&gt;
+  &lt;InputToColumnsCollection&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[City]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;City&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;FixedAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstName]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;ContactFirstName&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;FixedAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[LastName]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;ContactLastName&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;FixedAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[Factory_AK]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;Factory_AK&lt;/ColumnName&gt;
+      &lt;KeyType&gt;BusinessKey&lt;/KeyType&gt;
+      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[MaxWorkers]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;MaxWorkers&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[Nation]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;Nation&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;FixedAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+  &lt;/InputToColumnsCollection&gt;
+  &lt;GeneratedComponentsIdentificationStrings&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;Insert Destination&lt;/anyType&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;OLE DB Command&lt;/anyType&gt;
+  &lt;/GeneratedComponentsIdentificationStrings&gt;
+  &lt;FailFixedAttribute&gt;false&lt;/FailFixedAttribute&gt;
+  &lt;FailChangeAttribute&gt;false&lt;/FailChangeAttribute&gt;
+  &lt;UseStartEndDate&gt;false&lt;/UseStartEndDate&gt;
+  &lt;CurrentIndicatorColumn /&gt;
+  &lt;InferredIndicatorColumn /&gt;
+  &lt;ValueCurrent /&gt;
+  &lt;ValueExpired /&gt;
+  &lt;StartDateColumn /&gt;
+  &lt;EndDateColumn /&gt;
+  &lt;DateVariable /&gt;
+  &lt;EnableInferredSupport&gt;false&lt;/EnableInferredSupport&gt;
+&lt;/SCDWizardMetadata&gt;</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Sequence Container 1\Load DimModel">
     <LayoutInfo>
@@ -1880,7 +4060,9 @@ LEFT OUTER JOIN Item
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -2041,112 +4223,52 @@ LEFT OUTER JOIN Item
     </Properties>
   </PipelineComponentMetadata>
   <TaskHost
-    design-time-name="Package\Sequence Container 1\Load DimFactory">
+    design-time-name="Package\Sequence Container 2\Load FactOrders">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="153.333333333334,42.6666666666667"
+          Id="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate"
+          TopLeft="322.60416185949,447.433325422009" />
+        <NodeLayout
+          Size="160,42.6666666666667"
+          Id="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK"
+          TopLeft="306.979162092321,122.199997814894" />
+        <NodeLayout
+          Size="172,42.6666666666667"
+          Id="Package\Sequence Container 2\Load FactOrders\OLE DB Destination"
+          TopLeft="614.16665751487,453.933326778015" />
         <NodeLayout
           Size="150.666666666667,42.6666666666667"
-          Id="Package\Sequence Container 1\Load DimFactory\OLE DB Source"
-          TopLeft="238.166666666667,5.50000000000004" />
+          Id="Package\Sequence Container 2\Load FactOrders\OLE DB Source"
+          TopLeft="312.499995343387,51.5666657445828" />
         <NodeLayout
-          Size="166.666666666667,42.6666666666667"
-          Id="Package\Sequence Container 1\Load DimFactory\OLE DB Command"
-          TopLeft="230.166666666667,210.833333333334" />
+          Size="160,42.6666666666667"
+          Id="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate"
+          TopLeft="318.854161915369,361.291660206268" />
         <NodeLayout
-          Size="164,42.6666666666667"
-          Id="Package\Sequence Container 1\Load DimFactory\Insert Destination"
-          TopLeft="5.50000000000006,210.833333333334" />
+          Size="170.666666666667,42.6666666666667"
+          Id="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK"
+          TopLeft="308.854162064381,285.458328228941" />
         <NodeLayout
-          Size="209.333333333334,42.6666666666667"
-          Id="Package\Sequence Container 1\Load DimFactory\Slowly Changing Dimension"
-          TopLeft="208.833333333333,108.166666666667" />
+          Size="153.333333333334,42.6666666666667"
+          Id="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK"
+          TopLeft="312.499995343387,193.158329879394" />
         <EdgeLayout
-          Id="Package\Sequence Container 1\Load DimFactory.Paths[New Output]"
-          TopLeft="279.944444444444,150.833333333333">
+          Id="Package\Sequence Container 2\Load FactOrders.Paths[OLE DB Source Output]"
+          TopLeft="387.406245384521,94.2333324112495">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-192.444444444444,60.0000000000001"
+              EndConnector="0,27.9666654036445"
               Start="0,0"
-              End="-192.444444444444,52.5000000000001">
+              End="0,20.4666654036445">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,20.2730720606827" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,20.2730720606827"
-                    Point2="0,24.2730720606827"
-                    Point3="-4,24.2730720606827" />
-                  <mssgle:LineSegment
-                    End="-188.444444444444,24.2730720606827" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-188.444444444444,24.2730720606827"
-                    Point2="-192.444444444444,24.2730720606827"
-                    Point3="-192.444444444444,28.2730720606827" />
-                  <mssgle:LineSegment
-                    End="-192.444444444444,52.5000000000001" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-123.313608940972,29.2730720606827,54.1827734375,11.43359375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container 1\Load DimFactory.Paths[Changing Attribute Updates Output]"
-          TopLeft="347.055555555556,150.833333333333">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-33.5555555555555,60.0000000000001"
-              Start="0,0"
-              End="-33.5555555555555,52.5000000000001">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20.2730720606827" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,20.2730720606827"
-                    Point2="0,24.2730720606827"
-                    Point3="-4,24.2730720606827" />
-                  <mssgle:LineSegment
-                    End="-29.5555555555555,24.2730720606827" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-29.5555555555555,24.2730720606827"
-                    Point2="-33.5555555555555,24.2730720606827"
-                    Point3="-33.5555555555555,28.2730720606827" />
-                  <mssgle:LineSegment
-                    End="-33.5555555555555,52.5000000000001" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-95.3116840277778,29.2730720606827,157.0678125,11.6630859375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container 1\Load DimFactory.Paths[OLE DB Source Output]"
-          TopLeft="313.5,48.1666666666667">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60.0000000000001"
-              Start="0,0"
-              End="0,52.5000000000001">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5000000000001" />
+                    End="0,20.4666654036445" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2155,19 +4277,177 @@ LEFT OUTER JOIN Item
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 2\Load FactOrders.Paths[Lookup Match Output4]"
+          TopLeft="475.937495192823,472.016659433345">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="138.229162322047,0"
+              Start="0,0"
+              End="130.729162322047,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="130.729162322047,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="17.1731944422735,5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 2\Load FactOrders.Paths[Lookup Match Output3]"
+          TopLeft="399.062495220763,403.958326872935">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43.4749985490741"
+              Start="0,0"
+              End="0,35.9749985490741">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.9749985490741" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,12.1828117745371,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 2\Load FactOrders.Paths[Lookup Match Output2]"
+          TopLeft="396.520828656542,328.124994895608">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33.1666653106603"
+              Start="0,0"
+              End="0,25.6666653106603">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.6666653106603" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,7.02864515533015,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 2\Load FactOrders.Paths[Lookup Match Output1]"
+          TopLeft="391.677078703884,235.82499654606">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,49.6333316828803"
+              Start="0,0"
+              End="0,42.1333316828803">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.1333316828803" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,15.2619783414402,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container 2\Load FactOrders.Paths[Lookup Match Output]"
+          TopLeft="388.072912051187,164.866664481561">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,28.2916653978329"
+              Start="0,0"
+              End="0,20.7916653978329">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.7916653978329" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,4.59114519891645,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container 1\Load DimFactory\OLE DB Source">
+    design-time-name="Package\Sequence Container 2\Load FactOrders\LKP -  ShipDate">
     <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container 1\Load DimFactory\Insert Destination">
+    design-time-name="Package\Sequence Container 2\Load FactOrders\LKP - Factory_SK">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container 2\Load FactOrders\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -2180,69 +4460,79 @@ LEFT OUTER JOIN Item
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container 1\Load DimFactory\Slowly Changing Dimension">
+    design-time-name="Package\Sequence Container 2\Load FactOrders\OLE DB Source">
     <Properties>
       <Property>
-        <Name>SCDMetadata</Name>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container 2\Load FactOrders\LKP -  OrderDate">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SCDWizardMetadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionID&gt;{7E9E9A59-E6D2-4CD3-A093-7A53447088D2}&lt;/ConnectionID&gt;
-  &lt;TableName&gt;[dbo].[DimFactory]&lt;/TableName&gt;
-  &lt;InputToColumnsCollection&gt;
-    &lt;InputColumnToDBColumn&gt;
-      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[City]&lt;/IdentificationString&gt;
-      &lt;ColumnName&gt;City&lt;/ColumnName&gt;
-      &lt;KeyType&gt;None&lt;/KeyType&gt;
-      &lt;ChangeType&gt;FixedAttribute&lt;/ChangeType&gt;
-    &lt;/InputColumnToDBColumn&gt;
-    &lt;InputColumnToDBColumn&gt;
-      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[FirstName]&lt;/IdentificationString&gt;
-      &lt;ColumnName&gt;ContactFirstName&lt;/ColumnName&gt;
-      &lt;KeyType&gt;None&lt;/KeyType&gt;
-      &lt;ChangeType&gt;FixedAttribute&lt;/ChangeType&gt;
-    &lt;/InputColumnToDBColumn&gt;
-    &lt;InputColumnToDBColumn&gt;
-      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[LastName]&lt;/IdentificationString&gt;
-      &lt;ColumnName&gt;ContactLastName&lt;/ColumnName&gt;
-      &lt;KeyType&gt;None&lt;/KeyType&gt;
-      &lt;ChangeType&gt;FixedAttribute&lt;/ChangeType&gt;
-    &lt;/InputColumnToDBColumn&gt;
-    &lt;InputColumnToDBColumn&gt;
-      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[Factory_AK]&lt;/IdentificationString&gt;
-      &lt;ColumnName&gt;Factory_AK&lt;/ColumnName&gt;
-      &lt;KeyType&gt;BusinessKey&lt;/KeyType&gt;
-      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
-    &lt;/InputColumnToDBColumn&gt;
-    &lt;InputColumnToDBColumn&gt;
-      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[MaxWorkers]&lt;/IdentificationString&gt;
-      &lt;ColumnName&gt;MaxWorkers&lt;/ColumnName&gt;
-      &lt;KeyType&gt;None&lt;/KeyType&gt;
-      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
-    &lt;/InputColumnToDBColumn&gt;
-    &lt;InputColumnToDBColumn&gt;
-      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[Nation]&lt;/IdentificationString&gt;
-      &lt;ColumnName&gt;Nation&lt;/ColumnName&gt;
-      &lt;KeyType&gt;None&lt;/KeyType&gt;
-      &lt;ChangeType&gt;FixedAttribute&lt;/ChangeType&gt;
-    &lt;/InputColumnToDBColumn&gt;
-  &lt;/InputToColumnsCollection&gt;
-  &lt;GeneratedComponentsIdentificationStrings&gt;
-    &lt;anyType xsi:type="xsd:string"&gt;Insert Destination&lt;/anyType&gt;
-    &lt;anyType xsi:type="xsd:string"&gt;OLE DB Command&lt;/anyType&gt;
-  &lt;/GeneratedComponentsIdentificationStrings&gt;
-  &lt;FailFixedAttribute&gt;false&lt;/FailFixedAttribute&gt;
-  &lt;FailChangeAttribute&gt;false&lt;/FailChangeAttribute&gt;
-  &lt;UseStartEndDate&gt;false&lt;/UseStartEndDate&gt;
-  &lt;CurrentIndicatorColumn /&gt;
-  &lt;InferredIndicatorColumn /&gt;
-  &lt;ValueCurrent /&gt;
-  &lt;ValueExpired /&gt;
-  &lt;StartDateColumn /&gt;
-  &lt;EndDateColumn /&gt;
-  &lt;DateVariable /&gt;
-  &lt;EnableInferredSupport&gt;false&lt;/EnableInferredSupport&gt;
-&lt;/SCDWizardMetadata&gt;</Value>
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container 2\Load FactOrders\LKP - Customer_SK">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container 2\Load FactOrders\LKP - Model_SK">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>

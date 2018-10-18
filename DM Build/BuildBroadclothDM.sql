@@ -126,7 +126,7 @@ CREATE TABLE FactSales
 	Factory_SK			INT NOT NULL,
 	Model_SK			INT NOT NULL,
 	OrderDateKey		INT NOT NULL,
-	ShipDateKey			INT NOT NULL,
+	ShipDateKey			INT  NOT NULL,
 	OrderPrice			MONEY,
 	OrderQuantity		INT,
 	CONSTRAINT fk_order_dim_date FOREIGN KEY (OrderDateKey) REFERENCES DimDate(Date_SK),
